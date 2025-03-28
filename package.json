@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node index.js",
     "test": "jest",
-    "load-test": "artillery run load-test.yml"
+    "load-test": "npx artillery run load-test.yml"
   },
   "repository": {
     "type": "git",
