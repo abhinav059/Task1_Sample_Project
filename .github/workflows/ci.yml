@@ -1,4 +1,33 @@
-name: Node.js CI (Testing)
+# name: Node.js CI (Testing)
+
+# on:
+#   push:
+#     branches:
+#       - main
+#   pull_request:
+#     branches:
+#       - main
+
+# jobs:
+#   build-and-test:
+#     runs-on: ubuntu-latest
+
+#     steps:
+#       - name: Checkout Repository
+#         uses: actions/checkout@v4
+
+#       - name: Set Up Node.js
+#         uses: actions/setup-node@v4
+#         with:
+#           node-version: 20
+
+#       - name: Install Dependencies
+#         run: npm install
+
+#       - name: Run Tests
+#         run: npm test
+
+name: Node.js CI (Testing and Load Test)
 
 on:
   push:
@@ -24,5 +53,24 @@ jobs:
       - name: Install Dependencies
         run: npm install
 
-      - name: Run Tests
+      - name: Run Unit Tests
         run: npm test
+
+  load-test:
+    needs: build-and-test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set Up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Run Load Test
+        run: npm run load-test
