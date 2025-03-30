@@ -19,33 +19,33 @@ jobs:
       - name: Setup SSH
         run: |
           echo "-----BEGIN RSA PRIVATE KEY-----
-MIIEpAIBAAKCAQEAzAhhI1EkznBzuiDXL8DrUMDkfa8z23t942ugsgfqwWDWATpH
-UJxe9PC9HL1VLnO95C1+0YElk/39TsKRvRzwxGMg6Ur0VMADEdwzKPdzCE2M9XH+
-xTvkuhSe/yR9JjYMW9TsepqSDraU0lrKPtW1mqhuGz3DIQ4+Pb2remMLJ++/NAeG
-XdMPouL6ohf+7cxwx+ZH+Ug0ROAZeb9I8Qe9eq1YXutw7iZEnRxHwhhfSGamu8Ex
-LLK2yuC62/UZykMWZwPd05qX/G6XH/1HWNSqORe74B5qdBBXmzxJzvWEj/Cmii5e
-BTG4VGjHZt3QoQ9KFn6ms8ROfMnz8uF8aLLFCwIDAQABAoIBAGYy0E07aN9K7nzN
-1FukG3qAlDLsXmJS8hTHJV/nnUwtsCQ/R9d17A5uw5swrwksinJP45UXRnZho88e
-oJeEdok4ShTxKX+GCkOY87tSbzk6dx++cOnkfUZD6/xLD7DjI7+f4K/s2rop9FOF
-jIZ6z5NfSH+2qRXWp5CPf+Q21jCy/ib/u7RyvqQk+ySNzfoV+H4LUFEtU7ExOPZd
-16yidK1y+w/ncZ7IPJUA6ISmDy8g9rOSBVoX1CzFKk8F1G9vMpi4a2NeqxUqJcto
-WoOhJPA4sd+M/AR2ZLYHi+KFMRC9mNntMpasZtO/kax02zPf2C0hs1D3Eo0gp/tU
-eDeqjHECgYEA6U6oEzynK0FrlxebKBifUuz1dyZxNLgF9RGX9acchEzfOOTaw3HM
-XcrmbbtVJ2rxGE+vh1X/flayVub+uPnesvRR54C+gZsAQm9zJurHfM2vVN+5TSsj
-zLCMJGksRHKzjmKVOS09CQR4APJy3jsJaapDn0XWr6c2KbKHP3A/gdMCgYEA3+DJ
-yrRxHEvqFBoIx0SR4EFOBSO+ayQ4ipXgo8nb/ZN38i0tG1VENBgcpplafniJx3C4
-E0ndxk2Zfm5iIjq2HbcAce5OUtHoBq1jSH2erzbZXL6htjeJvB0qXTvqZaoQ21yS
-oNER4NrN+abErbg35UQLzE3ZoQQr5eugY4pmdOkCgYEAivj9iSfx9AQuEHxRQdsY
-3I6l0OmnOV38vnRSblOy2uPne75myVD6CUyZYffay3YaUv70ccs6O4ltBfLm/Exq
-6XI7b4jy8cTgrLIyh5YGakMjE42IlX0DACSR9gZoBgXFCyWR+dMGrl5pFTdWUSYd
-f0Gasj8pmMwjqUbc5V75lV0CgYEA09OD+wi6ETT++SAc+DY39EC2CoTkccmmufHP
-yAmB3i7/CaSXDkqiKsw5p6RoDEwOyScs9AsrDKt1tTvKHGsCz6DMigAaGaDEcjTy
-QK+jSlOSXH9+0MNBzjymTesYADNmmbfAgOrwiJle1H1nkJtCP+ofY6KxbPlec8B7
-VFOqV6kCgYAt/nScFBN/hsy12w+hYissiOKHx3++VinPSzwa4O8TGMVYBuwV9e/G
-/9xU0w0QSrDs+rzu9PJ06QEt4GOqBQKviYikPmpUQhGJSSBuGoYbZhWMITpVEJ+d
-iapQsAOlvxy2JHo9zzF+V1Vo6DWT9kt6j4dmFBIGRRFVRxikLy7ptQ==
------END RSA PRIVATE KEY-----" > private_key.pem
-          chmod 600 private_key.pem
+          MIIEpAIBAAKCAQEAzAhhI1EkznBzuiDXL8DrUMDkfa8z23t942ugsgfqwWDWATpH
+          UJxe9PC9HL1VLnO95C1+0YElk/39TsKRvRzwxGMg6Ur0VMADEdwzKPdzCE2M9XH+
+          xTvkuhSe/yR9JjYMW9TsepqSDraU0lrKPtW1mqhuGz3DIQ4+Pb2remMLJ++/NAeG
+          XdMPouL6ohf+7cxwx+ZH+Ug0ROAZeb9I8Qe9eq1YXutw7iZEnRxHwhhfSGamu8Ex
+          LLK2yuC62/UZykMWZwPd05qX/G6XH/1HWNSqORe74B5qdBBXmzxJzvWEj/Cmii5e
+          BTG4VGjHZt3QoQ9KFn6ms8ROfMnz8uF8aLLFCwIDAQABAoIBAGYy0E07aN9K7nzN
+          1FukG3qAlDLsXmJS8hTHJV/nnUwtsCQ/R9d17A5uw5swrwksinJP45UXRnZho88e
+          oJeEdok4ShTxKX+GCkOY87tSbzk6dx++cOnkfUZD6/xLD7DjI7+f4K/s2rop9FOF
+          jIZ6z5NfSH+2qRXWp5CPf+Q21jCy/ib/u7RyvqQk+ySNzfoV+H4LUFEtU7ExOPZd
+          16yidK1y+w/ncZ7IPJUA6ISmDy8g9rOSBVoX1CzFKk8F1G9vMpi4a2NeqxUqJcto
+          WoOhJPA4sd+M/AR2ZLYHi+KFMRC9mNntMpasZtO/kax02zPf2C0hs1D3Eo0gp/tU
+          eDeqjHECgYEA6U6oEzynK0FrlxebKBifUuz1dyZxNLgF9RGX9acchEzfOOTaw3HM
+          XcrmbbtVJ2rxGE+vh1X/flayVub+uPnesvRR54C+gZsAQm9zJurHfM2vVN+5TSsj
+          zLCMJGksRHKzjmKVOS09CQR4APJy3jsJaapDn0XWr6c2KbKHP3A/gdMCgYEA3+DJ
+          yrRxHEvqFBoIx0SR4EFOBSO+ayQ4ipXgo8nb/ZN38i0tG1VENBgcpplafniJx3C4
+          E0ndxk2Zfm5iIjq2HbcAce5OUtHoBq1jSH2erzbZXL6htjeJvB0qXTvqZaoQ21yS
+          oNER4NrN+abErbg35UQLzE3ZoQQr5eugY4pmdOkCgYEAivj9iSfx9AQuEHxRQdsY
+          3I6l0OmnOV38vnRSblOy2uPne75myVD6CUyZYffay3YaUv70ccs6O4ltBfLm/Exq
+          6XI7b4jy8cTgrLIyh5YGakMjE42IlX0DACSR9gZoBgXFCyWR+dMGrl5pFTdWUSYd
+          f0Gasj8pmMwjqUbc5V75lV0CgYEA09OD+wi6ETT++SAc+DY39EC2CoTkccmmufHP
+          yAmB3i7/CaSXDkqiKsw5p6RoDEwOyScs9AsrDKt1tTvKHGsCz6DMigAaGaDEcjTy
+          QK+jSlOSXH9+0MNBzjymTesYADNmmbfAgOrwiJle1H1nkJtCP+ofY6KxbPlec8B7
+          VFOqV6kCgYAt/nScFBN/hsy12w+hYissiOKHx3++VinPSzwa4O8TGMVYBuwV9e/G
+          /9xU0w0QSrDs+rzu9PJ06QEt4GOqBQKviYikPmpUQhGJSSBuGoYbZhWMITpVEJ+d
+          iapQsAOlvxy2JHo9zzF+V1Vo6DWT9kt6j4dmFBIGRRFVRxikLy7ptQ==
+          -----END RSA PRIVATE KEY-----" > private_key.pem
+                    chmod 600 private_key.pem
 
       - name: Deploy to EC2
         run: |
