@@ -45,7 +45,7 @@ jobs:
           /9xU0w0QSrDs+rzu9PJ06QEt4GOqBQKviYikPmpUQhGJSSBuGoYbZhWMITpVEJ+d
           iapQsAOlvxy2JHo9zzF+V1Vo6DWT9kt6j4dmFBIGRRFVRxikLy7ptQ==
           -----END RSA PRIVATE KEY-----" > private_key.pem
-                    chmod 600 private_key.pem
+          chmod 600 private_key.pem
 
       - name: Deploy to EC2
         run: |
@@ -57,14 +57,21 @@ jobs:
             echo "Deployment Successful!"
           EOF
 
-rollback:
+  rollback:
     runs-on: ubuntu-latest
     if: ${{ failure() }}
 
     steps:
+      - name: Setup SSH
+        run: |
+          echo "-----BEGIN RSA PRIVATE KEY-----
+          ...
+          -----END RSA PRIVATE KEY-----" > private_key.pem
+          chmod 600 private_key.pem
+
       - name: Rollback on Failure
         run: |
-          ssh -o StrictHostKeyChecking=no -i private_key.pem ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << 'EOF'
+          ssh -o StrictHostKeyChecking=no -i private_key.pem ec2-user@15.207.98.242 << 'EOF'
             echo "Deployment Failed. Rolling back..."
             cd Task1_Sample_Project
             git reset --hard HEAD~1
@@ -82,5 +89,3 @@ rollback:
       #       pm2 restart index.js || pm2 start index.js
       #       echo "Deployment Successful!"
       #     EOF
-
-
