@@ -1,0 +1,32 @@
+name: Continuous Deployment
+
+on:
+  workflow_run:
+    workflows: ["Continuous Integration (Testing and Load Test)"]  
+    types:
+      - completed
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}  # Run only if CI succeeds
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup SSH
+        run: |
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > private_key.pem
+          chmod 600 private_key.pem
+
+      - name: Deploy to EC2
+        run: |
+          ssh -o StrictHostKeyChecking=no -i private_key.pem ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << 'EOF'
+            cd Task1_Sample_Project || git clone https://github.com/abhinav059/Task1_Sample_Project.git && cd Task1_Sample_Project
+            git pull origin main
+            npm install
+            pm2 restart index.js || pm2 start index.js
+            echo "Deployment Successful!"
+          EOF

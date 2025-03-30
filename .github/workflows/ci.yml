@@ -27,7 +27,7 @@
 #       - name: Run Tests
 #         run: npm test
 
-name: Node.js CI (Testing and Load Test)
+name: Continuous Integration (Testing and Load Test)
 
 on:
   push:
