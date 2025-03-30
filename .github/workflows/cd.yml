@@ -57,6 +57,22 @@ jobs:
             echo "Deployment Successful!"
           EOF
 
+rollback:
+    runs-on: ubuntu-latest
+    if: ${{ failure() }}
+
+    steps:
+      - name: Rollback on Failure
+        run: |
+          ssh -o StrictHostKeyChecking=no -i private_key.pem ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << 'EOF'
+            echo "Deployment Failed. Rolling back..."
+            cd Task1_Sample_Project
+            git reset --hard HEAD~1
+            npm install
+            pm2 restart index.js
+            echo "Rollback Completed!"
+          EOF
+
       # - name: Deploy to EC2
       #   run: |
       #     ssh -o StrictHostKeyChecking=no -i private_key.pem ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << 'EOF'
