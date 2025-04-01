@@ -310,7 +310,7 @@ Here's a well-detailed README to explain how you can set up logging and monitori
 
 ---
 
-# TASK %Monitoring and Logging S
+# TASK 5 Monitoring and Logging S
 ## DEMO VIDEO LINK - https://drive.google.com/file/d/1B6EXccutGxwr6c3ilrY6bBPN35IIvT_Y/view?usp=sharing
  **Amazon CloudWatch** and **Grafana**.
 
