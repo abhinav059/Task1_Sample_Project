@@ -1,8 +1,6 @@
-# Node Hello World
-
 Simple node.js app that servers "hello world"
 
-Certainly! Below is an enhanced version of your README that includes sections for **Branching**, **Merging**, and **Conflict Resolution**.
+ **Branching**, **Merging**, and **Conflict Resolution**.
 
 ---
 
