@@ -234,4 +234,75 @@ docker rmi docker-node-app
 - Modify the `Dockerfile` or `server.js` if needed before rebuilding the image.
 - Run `docker images` to view all images stored on your system.
 
+# TASK 4 AWS CloudFormation Infrastructure as Code (IaC):
+
+## DEMO VIDEO LINK - https://drive.google.com/file/d/1qAOdlkyNk1jC1cs_TJgZc0M92brB3gKO/view?usp=drive_link
+
+cloudFormation template to provision a simple infrastructure on AWS. The template defines a security group and an EC2 instance, enabling SSH and HTTP access.
+
+## CloudFormation Template
+The CloudFormation code is provided in the `infrastructure.yml` file, which automates the deployment of:
+- A Security Group allowing SSH (port 22) and HTTP (port 80) access.
+- An EC2 instance with `t2.micro` type, associated with the security group.
+
+### CloudFormation Code (`infrastructure.yml`)
+```yaml
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Simple CloudFormation template to launch an EC2 instance with a Security Group.
+
+Resources:
+  # Security Group to Allow SSH and HTTP Access
+  SimpleSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Allow SSH and HTTP
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 22
+          ToPort: 22
+          CidrIp: 0.0.0.0/0   #  SSH from anywhere 
+        - IpProtocol: tcp
+          FromPort: 80
+          ToPort: 80
+          CidrIp: 0.0.0.0/0   # HTTP access from anywhere
+
+  # EC2 Instance with Security Group
+  SimpleEC2Instance:
+    Type: AWS::EC2::Instance
+    Properties:
+      ImageId: ami-004b2d9f56fc12712  
+      InstanceType: t2.micro
+      KeyName: Mykey  
+      SecurityGroups:
+        - !Ref SimpleSecurityGroup
+      Tags:
+        - Key: Name
+          Value: SimpleEC2Instance
+
+Outputs:
+  InstancePublicIP:
+    Description: Public IP address of the EC2 instance
+    Value: !GetAtt SimpleEC2Instance.PublicIp
+```
+
+## Deployment Steps (AWS Console)
+1. **Login to AWS Management Console**
+2. **Navigate to CloudFormation**
+   - Open the AWS CloudFormation service.
+   - Click on **Create stack** and select **With new resources (standard)**.
+3. **Upload the CloudFormation Template**
+   - Select **Upload a template file**.
+   - Choose the `infrastructure.yml` file and click **Next**.
+4. **Specify Stack Details**
+   - Enter a **Stack name** (e.g., `MyEC2Stack`).
+   - Provide required parameters (e.g., Key Pair Name).
+   - Click **Next**.
+5. **Configure Stack Options**
+6. **Review and Create**
+7. **Monitor Deployment**
+   - Wait for the stack status to change to `CREATE_COMPLETE`.
+   - Navigate to the **Outputs** tab to find the public IP of the EC2 instance.
+8. **Access the EC2 Instance**
+9. **Delete the Stack (Cleanup)**
+
 
