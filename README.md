@@ -170,7 +170,7 @@ Once configured, the CI pipeline runs automatically:
 6. The test results will be displayed in the **Actions** tab on GitHub.
 
 
-# TASK 2 DOCKER Basics
+# TASK 3 DOCKER Basics
 ## DEMO VIDEO link - https://drive.google.com/file/d/1rHmetRFgVHYogp_2WkPIwYKMaCCFCi35/view?usp=sharing
 
 The application runs inside a Docker container and is accessible via `http://localhost:3000`.
