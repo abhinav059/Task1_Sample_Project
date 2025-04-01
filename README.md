@@ -1,15 +1,11 @@
 Simple node.js app that servers "hello world"
 
- **Branching**, **Merging**, and **Conflict Resolution**.
-
 ---
 
 
 # Task1 Sample Project
 
-Git repository setup, branching strategies, merging, and conflict resolution. 
-
-
+Git repository setup,**Branching**, **Merging**, and **Conflict Resolution**.
 ###  1: Clone the Repository
 
 ```bash
