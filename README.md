@@ -137,7 +137,7 @@ git push origin main
 
 
 # TASK 2 Continuous Integration (CI) with GitHub Actions
-## DEMO VIDEO link - https://drive.google.com/file/d/1ZKG8clXGRiHy5U18Ov7FGXdSqiZTvh6z/view?usp=drive_link
+## DEMO0 VIDEO link - https://drive.google.com/file/d/1ZKG8clXGRiHy5U18Ov7FGXdSqiZTvh6z/view?usp=drive_link
 ## Overview
 The CI pipeline is designed to automate testing for a sample application, ensuring code quality and reliability with every push to the repository.
 
@@ -396,4 +396,96 @@ After starting the agent,
 - With CloudWatch logs and metrics integrated into Grafana, you can now:
   - View metrics such as CPU usage, memory usage, and network traffic.
   - Monitor logs for errors and anomalies that might indicate issues in your application.
+
+# TASK 6 Continuous Deployment (CD) and Rollback
+## DEMO VIDEO LINK - https://drive.google.com/file/d/1HfOv1U8s7132FS1e7ED8JZ1cTgXa6_lz/view?usp=sharing
+ The deployment process automatically deploys the application to an EC2 instance when changes are pushed to the `main` branch and successfully pass the CI workflow. If deployment fails, an automatic rollback is triggered.
+
+## Setup and Configuration
+
+### Prerequisites
+1. **GitHub Repository** - 
+2. **EC2 Instance** - 
+3. **SSH Access** - Add an SSH key as a GitHub secret for authentication.
+4. **Node.js and PM2 Installed** - The instance should have Node.js and PM2 installed.
+
+### GitHub Secrets Configuration
+
+Set upp GitHub secrets in your repository:
+- `SSH_PRIVATE_KEY`: The private key for SSH access to your EC2 instance.
+- `EC2_HOST`: Public IP of your EC2 instance.
+- `EC2_USER`: SSH username (e.g., `ec2-user`).
+
+### GitHub Actions Workflow File (`.github/workflows/cd.yml`)
+
+```yaml
+name: Continuous Deployment
+
+on:
+  workflow_run:
+    workflows: ["Continuous Integration (Testing and Load Test)"]
+    types:
+      - completed
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup SSH
+        run: |
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > private_key.pem
+          chmod 600 private_key.pem
+
+      - name: Deploy to EC2
+        run: |
+          ssh -o StrictHostKeyChecking=no -i private_key.pem ec2-user@${{ secrets.EC2_HOST }} << 'EOF'
+            cd Task1_Sample_Project || git clone https://github.com/abhinav059/Task1_Sample_Project.git && cd Task1_Sample_Project
+            git pull origin main
+            npm install
+            pm2 restart index.js || pm2 start index.js
+            echo "Deployment Successful!"
+          EOF
+```
+
+1. **Triggers after CI workflow completion** - Deployment occurs only if tests pass.
+2. **Checks out the latest code** from the GitHub repository.
+3. **Connects to the EC2 instance** securely using SSH.
+4. **Updates the application** by pulling the latest code from GitHub.
+5. **Installs dependencies and restarts the server** using `pm2`.
+
+---
+## Rollback Strategy
+
+```yaml
+  rollback:
+    runs-on: ubuntu-latest
+    if: ${{ failure() }}
+
+    steps:
+      - name: Setup SSH
+        run: |
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > private_key.pem
+          chmod 600 private_key.pem
+
+      - name: Rollback on Failure
+        run: |
+          ssh -o StrictHostKeyChecking=no -i private_key.pem ec2-user@${{ secrets.EC2_HOST }} << 'EOF'
+            echo "Deployment Failed. Rolling back..."
+            cd Task1_Sample_Project
+            git reset --hard HEAD~1
+            npm install
+            pm2 restart index.js
+            echo "Rollback Completed!"
+          EOF
+```
+1. If deployment fails, the workflow is triggered automatically.
+2. It logs into the EC2 instance and resets the code to the previous commit.
+3. Dependencies are reinstalled, and the application restarts.
+4. Confirms rollback completion in logs.
 
