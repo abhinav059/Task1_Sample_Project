@@ -489,3 +489,96 @@ jobs:
 3. Dependencies are reinstalled, and the application restarts.
 4. Confirms rollback completion in logs.
 
+   
+# TASK 7 Configuration Management:
+
+To automate the setup of a server environment using **Ansible**,
+
+### **1️⃣ Install Ansible on Your Control Machine**
+If Ansible is not installed, install it using:
+```bash
+sudo apt update && sudo apt install -y ansible  # For Ubuntu/Debian
+sudo yum install -y ansible  # For RHEL/CentOS
+```
+
+### **2️⃣ Define the Inventory File (`inventory.ini`)**  
+Create an inventory file specifying the target server(s):
+
+```ini
+[webserver]
+15.207.98.242 ansible_user=ec2-user ansible_ssh_private_key_file=~/path/to/private_key.pem
+```
+
+> Replace `15.207.98.242` with your **EC2 instance's public IP** and update the private key path.
+
+---
+
+### **3️⃣ Write an Ansible Playbook (`setup_server.yml`)**  
+This playbook:
+✅ **Updates the system**  
+✅ **Installs necessary packages (Node.js, Git, PM2, and CloudWatch Agent)**  
+✅ **Clones a project from GitHub**  
+✅ **Starts the application with PM2**  
+
+```yaml
+---
+- name: Setup Web Server
+  hosts: webserver
+  become: yes  # Run tasks as sudo
+  tasks:
+
+    - name: Update system packages
+      yum:
+        name: "*"
+        state: latest
+
+    - name: Install required packages
+      yum:
+        name:
+          - git
+          - nodejs
+          - amazon-cloudwatch-agent
+        state: present
+
+    - name: Clone the Git repository
+      git:
+        repo: "https://github.com/abhinav059/Task1_Sample_Project.git"
+        dest: "/home/ec2-user/Task1_Sample_Project"
+        version: main
+        update: yes
+
+    - name: Install NPM dependencies
+      command: npm install
+      args:
+        chdir: /home/ec2-user/Task1_Sample_Project
+
+    - name: Start application with PM2
+      command: pm2 start index.js
+      args:
+        chdir: /home/ec2-user/Task1_Sample_Project
+
+    - name: Enable CloudWatch Agent
+      command: sudo amazon-cloudwatch-agent-ctl -a start -c file:/opt/aws/amazon-cloudwatch-agent/bin/config.json -s
+```
+
+---
+
+### **4️⃣ Run the Playbook**
+Execute the playbook using:
+```bash
+ansible-playbook -i inventory.ini setup_server.yml
+```
+
+---
+
+### What Does This Do?**
+**Connects to the EC2 instance**  
+*Updates the OS and installs necessary tools**  
+**Clones the project from GitHub**  
+ **Installs dependencies using `npm install`**  
+**Starts the app using `pm2`**  
+ **Starts CloudWatch Agent for monitoring**  
+
+---
+
+
