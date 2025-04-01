@@ -118,12 +118,12 @@ Your code from the feature branch
 
 You need to decide which code to keep (either from `main` or `feature`), or you can combine them manually.
 
-### Step 3: Stage the Resolved Files
+Stage the Resolved Files
 
 Once you've resolved the conflicts, stage the resolved files:
 
 ```bash
-git add <file-name>
+git add .
 ```
 
 ### Step 4: Complete the Merge
