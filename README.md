@@ -306,3 +306,94 @@ Outputs:
 9. **Delete the Stack (Cleanup)**
 
 
+Here's a well-detailed README to explain how you can set up logging and monitoring for an application using CloudWatch for logging and Grafana for monitoring:
+
+---
+
+# TASK %Monitoring and Logging S
+## DEMO VIDEO LINK - https://drive.google.com/file/d/1B6EXccutGxwr6c3ilrY6bBPN35IIvT_Y/view?usp=sharing
+ **Amazon CloudWatch** and **Grafana**.
+
+- **Logging**: Amazon CloudWatch is used to collect and store logs from the application. CloudWatch allows us to track the application logs and provides insight into its behavior.
+- **Monitoring**: Grafana is integrated with CloudWatch to monitor metrics and visualize them in a more user-friendly way.
+
+### Prerequisites
+1. **AWS Account**: 
+2. **EC2 Instance**: A running EC2 instance with your application installed.
+3. **Grafana**: Grafana will be used to visualize CloudWatch metrics. 
+
+
+### 1. Set Up Amazon CloudWatch for Logging
+
+#### a. Install and Configure CloudWatch Agent on EC2
+
+1. **Connect to EC2**:
+   ```bash
+   ssh -i "path-to-your-key.pem" ec2-user@<your-ec2-public-ip>
+   ```
+
+2. **Install CloudWatch Agent**:
+   First, update your system and install CloudWatch Agent:
+   ```bash
+   sudo yum update -y
+   sudo yum install amazon-cloudwatch-agent -y
+   ```
+
+3. **Create the CloudWatch Agent Configuration File**:
+   - You need to create a configuration file for the CloudWatch agent to define which log files you want to monitor. 
+   - Example configuration file (located at `/opt/aws/amazon-cloudwatch-agent/bin/config.json`):
+   - This configuration specifies that any logs under `/var/log/myapp/*.log` will be pushed to the CloudWatch Logs group `myapp-logs`.
+
+4. **Start CloudWatch Agent**:
+   ```bash
+   sudo amazon-cloudwatch-agent-ctl -a start -c file:/opt/aws/amazon-cloudwatch-agent/bin/config.json -s
+   ```
+
+#### b. Verify CloudWatch Logs
+After starting the agent, 
+1. Navigate to the **CloudWatch Console**.
+2. In the **Logs** section, check for the `myapp-logs` group.
+3. Inside this log group, you will find log streams for each EC2 instance.
+
+
+#### b. Install Grafana
+
+1. **Install Grafana** on your EC2 instance:
+   ```bash
+   sudo yum install -y https://dl.grafana.com/oss/release/grafana-8.5.5-1.x86_64.rpm
+   ```
+
+2. **Start Grafana**:
+   ```bash
+   sudo systemctl start grafana-server
+   sudo systemctl enable grafana-server
+   ```
+
+3. **Access Grafana**:
+   - Grafana runs by default on port `3000`.
+   - Open your browser and visit `http://<ec2-ip>:3000`.
+   - The default username and password are `admin`/`admin`. You will be prompted to change the password on the first login.
+
+#### c. Set Up CloudWatch as a Data Source in Grafana
+
+1. In Grafana, click on the **gear icon** (settings) on the left-hand menu.
+2. Click **Data Sources**, then **Add Data Source**.
+3. Select **CloudWatch** from the list of available sources.
+4. Configure the **Access Key ID** and **Secret Access Key** that have permissions to read CloudWatch metrics.
+5. Click **Save & Test** to verify the connection.
+
+#### d. Create Dashboards in Grafana
+
+1. After adding CloudWatch as a data source, go to **Create** > **Dashboard**.
+2. Click **Add Query** and select **CloudWatch** as the data source.
+3. Choose the metrics you want to visualize. For example, you can choose metrics like **CPU Utilization**, **Memory Usage**, and **Disk I/O**.
+4. Customize the visualization type (e.g., Graph, Gauge, Table) and save your dashboard.
+
+---
+
+### 3. Monitor and Visualize Logs and Metrics in Grafana
+
+- With CloudWatch logs and metrics integrated into Grafana, you can now:
+  - View metrics such as CPU usage, memory usage, and network traffic.
+  - Monitor logs for errors and anomalies that might indicate issues in your application.
+
