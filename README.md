@@ -169,3 +169,69 @@ Once configured, the CI pipeline runs automatically:
 5. GitHub Actions will trigger the workflow and execute tests.
 6. The test results will be displayed in the **Actions** tab on GitHub.
 
+
+# TASK 2 DOCKER Basics
+## DEMO VIDEO link - https://drive.google.com/file/d/1rHmetRFgVHYogp_2WkPIwYKMaCCFCi35/view?usp=sharing
+
+The application runs inside a Docker container and is accessible via `http://localhost:3000`.
+
+## Getting Started
+
+To set up and run the application, navigate to the `Docker_Task` folder within this repository and follow the steps below.
+
+### Prerequisites
+- Install DOCKER on your system.
+
+## Steps to Run the Application
+
+### 1. Navigate to the Project Directory
+```bash
+cd Docker_Task
+```
+
+### 2. Build the Docker Image
+```bash
+docker build -t docker-node-app .
+```
+
+### 3. Run the Docker Container
+```bash
+docker run -p 3000:3000 docker-node-app
+```
+
+The application will now be accessible at:
+```
+http://localhost:3000
+```
+
+## Managing Docker Images and Containers
+
+### List Running Containers
+```bash
+docker ps
+```
+
+### List All Containers (Including Stopped Ones)
+```bash
+docker ps -a
+```
+
+### Stop a Running Container
+```bash
+docker stop <conid>
+```
+
+### Remove a Container
+```bash
+docker rm <conid>
+```
+
+### Remove the Docker Image
+```bash
+docker rmi docker-node-app
+```
+- Ensure port 3000 is available before running the container.
+- Modify the `Dockerfile` or `server.js` if needed before rebuilding the image.
+- Run `docker images` to view all images stored on your system.
+
+
