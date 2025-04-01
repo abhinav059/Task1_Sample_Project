@@ -494,14 +494,14 @@ jobs:
 
 To automate the setup of a server environment using **Ansible**,
 
-### **1️⃣ Install Ansible on Your Control Machine**
+### ** Install Ansible on Your Control Machine**
 If Ansible is not installed, install it using:
 ```bash
 sudo apt update && sudo apt install -y ansible  # For Ubuntu/Debian
 sudo yum install -y ansible  # For RHEL/CentOS
 ```
 
-### **2️⃣ Define the Inventory File (`inventory.ini`)**  
+### ** Define the Inventory File (`inventory.ini`)**  
 Create an inventory file specifying the target server(s):
 
 ```ini
@@ -513,12 +513,12 @@ Create an inventory file specifying the target server(s):
 
 ---
 
-### **3️⃣ Write an Ansible Playbook (`setup_server.yml`)**  
+### ** Write an Ansible Playbook (`setup_server.yml`)**  
 This playbook:
-✅ **Updates the system**  
-✅ **Installs necessary packages (Node.js, Git, PM2, and CloudWatch Agent)**  
-✅ **Clones a project from GitHub**  
-✅ **Starts the application with PM2**  
+ **Updates the system**  
+**Installs necessary packages (Node.js, Git, PM2, and CloudWatch Agent)**  
+ **Clones a project from GitHub**  
+ **Starts the application with PM2**  
 
 ```yaml
 ---
@@ -563,7 +563,7 @@ This playbook:
 
 ---
 
-### **4️⃣ Run the Playbook**
+### **4️ Run the Playbook**
 Execute the playbook using:
 ```bash
 ansible-playbook -i inventory.ini setup_server.yml
