@@ -6,7 +6,6 @@ Certainly! Below is an enhanced version of your README that includes sections fo
 
 ---
 
-### **README.md**
 
 # Task1 Sample Project
 
