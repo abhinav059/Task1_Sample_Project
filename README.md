@@ -134,3 +134,38 @@ git commit -m "Resolved merge conflict between main and feature"
 git push origin main
 ```
 ---
+
+
+# TASK 2 Continuous Integration (CI) with GitHub Actions
+## DEMO VIDEO link - https://drive.google.com/file/d/1ZKG8clXGRiHy5U18Ov7FGXdSqiZTvh6z/view?usp=drive_link
+## Overview
+The CI pipeline is designed to automate testing for a sample application, ensuring code quality and reliability with every push to the repository.
+
+## Setting Up GitHub Actions
+
+1. **Create the required directory structure:**
+   - Inside repository, create a folder named `.github/workflows/`.
+   - This folder will contain YAML (`.yml`) files that define your CI workflows.
+
+2. **Add a CI workflow file:**
+   - Create a file named `ci.yml` inside `.github/workflows/`.
+   - This file contains the instructions for automating testing.
+
+## CI Workflow Configuration
+The CI workflow is defined in the `.github/workflows/ci.yml` file. 
+1. **Checkout Code** – Pulls the latest changes from the repository.
+2. **Set Up Environment** – Configures runtime environment (e.g., Python, Node.js, etc.).
+3. **Install Dependencies** – Installs required dependencies for the application.
+4. **Run Tests** – Executes the test script to validate the application.
+
+## Running the CI Pipeline
+
+Once configured, the CI pipeline runs automatically:
+1. Push new changes to the repository.
+![](https://github.com/abhinav059/Screenshots/blob/main/task2(1).png)
+
+3. Open a pull request (PR) to the `main` branch.
+![](https://github.com/abhinav059/Screenshots/blob/main/task2(2).png)
+5. GitHub Actions will trigger the workflow and execute tests.
+6. The test results will be displayed in the **Actions** tab on GitHub.
+
