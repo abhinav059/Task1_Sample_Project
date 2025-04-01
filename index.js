@@ -63,7 +63,7 @@ const server = http.createServer((req, res) => {
       </style>
     </head>
     <body>
-      <h1>Hello!!!, Welcome to My Node.js App! 🚀</h1>
+      <h1>Hello!!, Welcome to My Node.js App! 🚀</h1>
       <p>This is a simple Node.js application with a stylish look.</p>
     </body>
     </html>
