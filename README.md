@@ -582,3 +582,11 @@ ansible-playbook -i inventory.ini setup_server.yml
 ---
 
 
+# TASK 8 Cloud Services Exploration:
+## DEMO VIDEO LINK - https://drive.google.com/file/d/1PpLMpzXJc9BYCQrZYe_XsBFmZWO3GgXA/view?usp=sharing
+### LAMBDA
+![](https://github.com/abhinav059/Screenshots/blob/main/LAMBDA.png)
+### RDS
+![](https://github.com/abhinav059/Screenshots/blob/main/RDS.png)
+### S3
+![](https://github.com/abhinav059/Screenshots/blob/main/S3.png)
