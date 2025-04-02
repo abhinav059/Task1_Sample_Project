@@ -661,10 +661,10 @@ AWS VPC
 ## LINK - https://github.com/abhinav059/CICD_Test/tree/main
 ## DEMO VIDEO LINK - https://drive.google.com/file/d/1CNx_2JzpxJGB26ypnTlLrMKgk1SweetG/view?usp=sharing
 ### CICD
-![](https://github.com/abhinav059/Screenshots/blob/main/!10T.png)
+![](https://github.com/abhinav059/Screenshots/blob/main/10T.png)
 
 ### SLACK NOTIFICATION
-![](https://github.com/abhinav059/Screenshots/blob/main/!10T2.png)
+![](https://github.com/abhinav059/Screenshots/blob/main/10T2.png)
 
 
 # TASK 11  Security Best Practices in DevOps
