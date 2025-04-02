@@ -657,3 +657,127 @@ AWS VPC
   - Allows MySQL/PostgreSQL connections (3306/5432) only from Public Subnet.
 
 
+# TASK 10 CICD PIPELINE AND SLACK Notification
+## LINK - https://github.com/abhinav059/CICD_Test/tree/main
+## DEMO VIDEO LINK - https://drive.google.com/file/d/1CNx_2JzpxJGB26ypnTlLrMKgk1SweetG/view?usp=sharing
+### CICD
+![](https://github.com/abhinav059/Screenshots/blob/main/!10T.png)
+
+### SLACK NOTIFICATION
+![](https://github.com/abhinav059/Screenshots/blob/main/!10T2.png)
+
+
+# TASK 11  Security Best Practices in DevOps
+
+## Overview
+Security is a critical aspect of DevOps, ensuring that applications are protected from threats while maintaining efficiency in development and deployment. This guide covers essential security practices in DevOps, including secrets management, HTTPS usage, IAM roles, and vulnerability scanning in the CI/CD pipeline.
+
+---
+
+## 1. Secrets Management
+**Best Practices:**
+- Store secrets securely using a secrets management tool instead of hardcoding them in repositories.
+- Use environment variables or a secrets vault to inject sensitive data securely.
+- Rotate secrets regularly to reduce security risks.
+
+### **Implementation**
+#### **Using AWS Secrets Manager**
+1. Create a secret in AWS Secrets Manager:
+   ```sh
+   aws secretsmanager create-secret --name MySecretKey --secret-string "my-secret-value"
+   ```
+2. Retrieve the secret securely in your application:
+   ```python
+   import boto3
+   client = boto3.client('secretsmanager')
+   secret = client.get_secret_value(SecretId='MySecretKey')
+   print(secret['SecretString'])
+   ```
+
+#### **Using GitHub Secrets**
+1. Go to your repository -> **Settings** -> **Secrets and variables** -> **Actions**.
+2. Add a new repository secret (e.g., `AWS_ACCESS_KEY`).
+3. Use it in GitHub Actions workflows:
+   ```yaml
+   env:
+     AWS_ACCESS_KEY: ${{ secrets.AWS_ACCESS_KEY }}
+   ```
+
+---
+
+## 2. Enforcing HTTPS for Secure Communication
+**Best Practices:**
+- Use HTTPS for all communications between clients and servers.
+- Enforce TLS (Transport Layer Security) to encrypt data in transit.
+- Redirect HTTP requests to HTTPS.
+
+### **Implementation**
+#### **Using Nginx to Force HTTPS**
+1. Install Nginx:
+   ```sh
+   sudo apt update && sudo apt install nginx
+   ```
+2. Configure SSL in `/etc/nginx/sites-available/default`:
+   ```nginx
+   server {
+       listen 80;
+       server_name example.com;
+       return 301 https://$host$request_uri;
+   }
+
+---
+
+## 3. Using IAM Roles for Access Control
+**Best Practices:**
+- Follow the principle of least privilege.
+- Use IAM roles instead of hardcoding credentials.
+- Assign IAM policies to restrict access to only necessary services.
+
+### **Implementation**
+#### **Creating an IAM Role for an EC2 Instance**
+1. Go to **AWS IAM Console** -> **Roles** -> **Create Role**.
+2. Select **EC2** as the trusted entity.
+3. Attach necessary permissions (e.g., `AmazonS3ReadOnlyAccess`).
+4. Assign the role to your EC2 instance.
+5. Verify access from EC2:
+   ```sh
+   aws s3 ls
+   ```
+
+---
+
+## 4. Vulnerability Scanning in CI/CD Pipeline
+**Best Practices:**
+- Integrate security scanning tools into CI/CD workflows.
+- Scan dependencies for known vulnerabilities.
+- Prevent deployment if vulnerabilities are found.
+
+### **Implementation**
+#### **Using Trivy for Container Security Scanning**
+1. Install Trivy:
+   ```sh
+   sudo apt install trivy
+   ```
+2. Scan a Docker image:
+   ```sh
+   trivy image my-docker-image
+   ```
+3. Add Trivy to GitHub Actions CI/CD:
+   ```yaml
+   jobs:
+     security_scan:
+       runs-on: ubuntu-latest
+       steps:
+         - name: Checkout code
+           uses: actions/checkout@v4
+         - name: Run Trivy scan
+           uses: aquasecurity/trivy-action@master
+           with:
+             image-ref: "my-docker-image"
+             format: "table"
+   ```
+
+
+## Conclusion
+Implementing security best practices in DevOps is essential to prevent unauthorized access, secure sensitive information, and mitigate vulnerabilities. By integrating secrets management, HTTPS enforcement, IAM roles, and vulnerability scanning into the CI/CD pipeline, you can enhance the security posture of your DevOps workflows.
+
