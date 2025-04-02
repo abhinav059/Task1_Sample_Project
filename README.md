@@ -590,3 +590,70 @@ ansible-playbook -i inventory.ini setup_server.yml
 ![](https://github.com/abhinav059/Screenshots/blob/main/RDS.png)
 ### S3
 ![](https://github.com/abhinav059/Screenshots/blob/main/S3.png)
+
+
+# TASK 9 NETWORKING VPC
+## DEMO VIDEO LINK - https://drive.google.com/file/d/1c-cXuOIFDaoFoMvJOEou_IhSWh67qtwL/view?usp=sharing
+
+A **Virtual Private Cloud (VPC)** allows you to create a logically isolated network within AWS. This guide covers setting up a VPC with subnets, route tables, and security groups to control network access for cloud-hosted applications.
+![](https://github.com/abhinav059/Screenshots/blob/main/9.png)
+
+---
+
+## Architecture Structure
+
+```
+AWS VPC
+│
+├── Public Subnet (For Internet-facing resources)
+│   ├── EC2 Instance (Public IP assigned)
+│   ├── Internet Gateway (Allows external traffic)
+│   ├── Route Table (Routes traffic via Internet Gateway)
+│
+├── Private Subnet (Internal resources like databases)
+│   ├── RDS Database Instance
+│   ├── No Public IP (Accessed via Bastion Host or VPN)
+│   ├── NAT Gateway (Allows outbound internet access)
+│
+├── Security Groups
+│   ├── Web SG (Allows HTTP/HTTPS traffic)
+│   ├── DB SG (Restricts access to only internal apps)
+│
+├── Route Tables
+│   ├── Public Route Table (Directs traffic to Internet Gateway)
+│   ├── Private Route Table (Routes traffic via NAT Gateway)
+```
+
+---
+
+## Steps to Set Up VPC on AWS
+
+### 1. Create a VPC
+- Open **AWS Management Console** → **VPC Service**.
+- Click **Create VPC** → Give it a name → Set an IPv4 CIDR block
+### 2. Create Subnets
+- Navigate to **Subnets** → **Create subnet**.
+- Select the VPC you created.
+- Create:
+  - **Public Subnet** 
+  - **Private Subnet** 
+
+### 3. Configure Route Tables
+- Go to **Route Tables** → Create a new route table for the VPC.
+- Associate:
+  - **Public Route Table** → Add route to **Internet Gateway**.
+  - **Private Route Table** → Add route to **NAT Gateway**.
+
+### 4. Set Up Internet Gateway (For Public Subnet)
+- Navigate to **Internet Gateways** → Create new IGW.
+- Attach it to your VPC.
+- Update **Public Route Table** to route traffic to IGW.
+- 
+###  Configure Security Groups
+- **Web Security Group**
+  - Allows inbound HTTP (80) and HTTPS (443) traffic.
+  - Allows SSH (22) from your IP.
+- **DB Security Group**
+  - Allows MySQL/PostgreSQL connections (3306/5432) only from Public Subnet.
+
+
